@@ -1,14 +1,14 @@
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-whattodo', type=int, default=4, help='1-train, 2-test')
+parser.add_argument('-whattodo', type=int, default=1, help='1-train, 2-test')
 parser.add_argument('-verbose', action='store_true', help='1-print debug logs')
 parser.add_argument('-random_seed', type=int, default=1)
 parser.add_argument('-train_file', default='./sample.txt')
 parser.add_argument('-dev_file', default='./sample.txt')
 parser.add_argument('-test_file', default='./sample.txt')
 parser.add_argument('-output', default='./output')
-parser.add_argument('-iter', type=int, default=50)
+parser.add_argument('-iter', type=int, default=100)
 parser.add_argument('-gpu', type=int, default=0)
 parser.add_argument('-tune_wordemb', action='store_true', default=False)
 parser.add_argument('-lr', type=float, default=0.001)

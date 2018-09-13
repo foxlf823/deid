@@ -1,7 +1,7 @@
 import codecs
 from alphabet import Alphabet
 import numpy as np
-
+import cPickle as pickle
 
 def loadData(file_path):
     file = codecs.open(file_path, 'r', 'UTF-8')
@@ -220,6 +220,17 @@ class Data:
         self.word_alphabet.close()
         self.char_alphabet.close()
         self.label_alphabet.close()
+
+    def load(self,data_file):
+        f = open(data_file, 'rb')
+        tmp_dict = pickle.load(f)
+        f.close()
+        self.__dict__.update(tmp_dict)
+
+    def save(self,save_file):
+        f = open(save_file, 'wb')
+        pickle.dump(self.__dict__, f, 2)
+        f.close()
 
 
 
