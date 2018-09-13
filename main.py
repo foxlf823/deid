@@ -5,6 +5,7 @@ import torch
 
 from options import opt
 import data
+import train
 
 print(opt)
 
@@ -14,7 +15,7 @@ if opt.random_seed != 0:
     torch.manual_seed(opt.random_seed)
     torch.cuda.manual_seed_all(opt.random_seed)
 
-d = data.Data()
+d = data.Data(opt)
 
 d.train_data = data.loadData(opt.train_file)
 d.dev_data = data.loadData(opt.dev_file)
@@ -29,4 +30,7 @@ d.fix_alphabet()
 d.train_texts, d.train_Ids = data.read_instance(d.train_data, d.word_alphabet, d.char_alphabet, d.label_alphabet)
 d.dev_texts, d.dev_Ids = data.read_instance(d.dev_data, d.word_alphabet, d.char_alphabet, d.label_alphabet)
 d.test_texts, d.test_Ids = data.read_instance(d.test_data, d.word_alphabet, d.char_alphabet, d.label_alphabet)
-pass
+
+d.pretrain_word_embedding, d.word_emb_dim = data.build_pretrain_embedding(opt.word_emb_file, d.word_alphabet, opt.word_emb_dim, False)
+
+train.train(d, opt)
