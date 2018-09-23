@@ -16,10 +16,10 @@ from my_utils import batchify_with_label, evaluate
 def train(data, opt):
     model = SeqModel(data, opt)
 
+    optimizer = optim.Adam(model.parameters(), lr=opt.lr, weight_decay=opt.l2)
+
     if opt.tune_wordemb == False:
         my_utils.freeze_net(model.word_hidden.wordrep.word_embedding)
-
-    optimizer = optim.Adam(model.parameters(), lr=opt.lr, weight_decay=opt.l2)
 
     best_dev = -10
     bad_counter = 0
@@ -63,8 +63,8 @@ def train(data, opt):
         _, _, p, r, f, _, _ = evaluate(data, opt, model, "dev")
         print("Dev: p: %.4f, r: %.4f, f: %.4f" % (p, r, f))
 
-        #if f > best_dev:
-        if True:
+        if f > best_dev:
+        # if True:
             print "Exceed previous best f score on dev:", best_dev
 
             torch.save(model.state_dict(), os.path.join(opt.output, "model.pkl"))
